@@ -87,45 +87,50 @@ export function ContactSection() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
+                <div className="animate-fade-in animate-delay-100">
                   <Input
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     required
+                    className="transition-colors-smooth focus-visible-ring"
                     data-testid="contact-name"
                   />
                 </div>
                 
-                <div>
+                <div className="animate-fade-in animate-delay-200">
                   <Input
                     type="email"
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     required
+                    className="transition-colors-smooth focus-visible-ring"
                     data-testid="contact-email"
                   />
                 </div>
                 
-                <div>
+                <div className="animate-fade-in animate-delay-300">
                   <Textarea
                     placeholder="Your Message"
                     value={formData.message}
                     onChange={(e) => handleInputChange("message", e.target.value)}
                     required
                     rows={4}
+                    className="transition-colors-smooth focus-visible-ring"
                     data-testid="contact-message"
                   />
                 </div>
                 
-                <Button 
-                  type="submit" 
-                  className="w-full"
-                  data-testid="contact-submit"
-                >
-                  Send Message
-                </Button>
+                <div className="animate-fade-in animate-delay-400">
+                  <Button 
+                    type="submit" 
+                    className="w-full transition-all-smooth hover-lift focus-visible-ring"
+                    data-testid="contact-submit"
+                  >
+                    Send Message
+                  </Button>
+                </div>
               </form>
             </CardContent>
           </Card>

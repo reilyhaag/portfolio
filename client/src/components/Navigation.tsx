@@ -11,10 +11,10 @@ export function Navigation() {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm">
+    <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm transition-all-smooth">
       <div className="max-w-6xl mx-auto px-6 py-6">
-        <div className="flex items-center justify-between">
-          <div className="text-lg font-medium text-foreground">
+        <div className="flex items-center justify-between animate-fade-in">
+          <div className="text-lg font-medium text-foreground transition-colors-smooth">
             AJ
           </div>
           
@@ -24,7 +24,7 @@ export function Navigation() {
               size="sm"
               onClick={() => scrollToSection("work")}
               data-testid="nav-work"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
               Work
             </Button>
@@ -33,7 +33,7 @@ export function Navigation() {
               size="sm"
               onClick={() => scrollToSection("about")}
               data-testid="nav-about"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
               About
             </Button>
@@ -42,7 +42,7 @@ export function Navigation() {
               size="sm"
               onClick={() => scrollToSection("contact")}
               data-testid="nav-contact"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
               Contact
             </Button>

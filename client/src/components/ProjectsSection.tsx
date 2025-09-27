@@ -59,8 +59,12 @@ export function ProjectsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <Card key={project.id} className="hover-elevate h-full" data-testid={`project-${project.id}`}>
+          {projects.map((project, index) => (
+            <Card 
+              key={project.id} 
+              className={`hover-elevate hover-lift h-full transition-all-smooth animate-fade-in-up animate-delay-${(index + 1) * 100}`} 
+              data-testid={`project-${project.id}`}
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -68,7 +72,7 @@ export function ProjectsSection() {
                       {project.title}
                     </h3>
                     {project.featured && (
-                      <Badge variant="secondary" className="text-xs mb-3">
+                      <Badge variant="secondary" className="text-xs mb-3 animate-scale-in">
                         Featured
                       </Badge>
                     )}
@@ -82,8 +86,12 @@ export function ProjectsSection() {
               <CardContent className="flex flex-col justify-between flex-1">
                 <div className="space-y-4">
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline" className="text-xs">
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge 
+                        key={tech} 
+                        variant="outline" 
+                        className={`text-xs animate-fade-in animate-delay-${(techIndex + 1) * 100}`}
+                      >
                         {tech}
                       </Badge>
                     ))}
@@ -94,7 +102,7 @@ export function ProjectsSection() {
                   <Button
                     variant="default"
                     size="sm"
-                    className="flex-1"
+                    className="flex-1 transition-all-smooth hover-lift focus-visible-ring"
                     onClick={() => handleLiveDemo(project.id)}
                     data-testid={`demo-${project.id}`}
                   >
@@ -104,7 +112,7 @@ export function ProjectsSection() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex-1"
+                    className="flex-1 transition-all-smooth hover-lift focus-visible-ring"
                     onClick={() => handleGithub(project.id)}
                     data-testid={`github-${project.id}`}
                   >
