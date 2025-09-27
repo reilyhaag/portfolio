@@ -22,14 +22,6 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
     const element = elementRef.current;
     if (!element || typeof window === 'undefined') return;
 
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (prefersReducedMotion) {
-      setIsInView(true);
-      return;
-    }
-
     let timeoutId: number | null = null;
 
     const observer = new IntersectionObserver(
@@ -70,16 +62,4 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
     elementRef,
     isInView,
   };
-}
-
-// Utility function to get animation classes based on view state
-export function getAnimationClasses(
-  isInView: boolean, 
-  animationType: 'fade-in' | 'fade-in-up' | 'scale-in' = 'fade-in-up',
-  baseClasses = ''
-) {
-  const animationClass = `animate-${animationType}`;
-  const visibilityClass = isInView ? 'animate-in' : 'animate-out';
-  
-  return `${baseClasses} ${animationClass} ${visibilityClass}`.trim();
 }

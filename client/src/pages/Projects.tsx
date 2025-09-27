@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, ArrowLeft } from "lucide-react";
-import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
+import { useInViewAnimation } from "@/hooks/useInViewAnimation";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { useEffect } from "react";
@@ -16,17 +16,14 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, index }: ProjectCardProps) {
   const cardAnimation = useInViewAnimation<HTMLDivElement>({ 
-    delay: index * 200 
+    delay: index * 100 
   });
 
   return (
     <Card 
       ref={cardAnimation.elementRef}
-      className={getAnimationClasses(
-        cardAnimation.isInView,
-        'fade-in-up',
-        'hover-elevate hover-lift h-full transition-all-smooth'
-      )} 
+      className="hover-elevate hover-lift h-full transition-all-smooth reveal"
+      data-revealed={cardAnimation.isInView}
       data-testid={`project-${project.id}`}
     >
       <CardHeader>
@@ -89,8 +86,8 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 }
 
 export default function Projects() {
-  const headerAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
-  const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 300 });
+  const headerAnimation = useInViewAnimation<HTMLHeadingElement>();
+  const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 100 });
 
   // Ensure page loads at top position
   useEffect(() => {
@@ -135,11 +132,8 @@ export default function Projects() {
         <div className="max-w-6xl mx-auto">
         <div 
           ref={backButtonAnimation.elementRef}
-          className={getAnimationClasses(
-            backButtonAnimation.isInView,
-            'fade-in-up',
-            'mb-8'
-          )}
+          className="mb-8 reveal"
+          data-revealed={backButtonAnimation.isInView}
         >
           <Button variant="ghost" asChild data-testid="back-to-home">
             <Link href="/">
@@ -152,11 +146,8 @@ export default function Projects() {
         <div className="mb-20">
           <h1 
             ref={headerAnimation.elementRef}
-            className={getAnimationClasses(
-              headerAnimation.isInView,
-              'fade-in-up',
-              'text-5xl font-medium text-foreground mb-8'
-            )}
+            className="text-5xl font-medium text-foreground mb-8 reveal"
+            data-revealed={headerAnimation.isInView}
           >
             All Projects
           </h1>

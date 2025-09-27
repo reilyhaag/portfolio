@@ -223,35 +223,26 @@ html {
     scroll-behavior: smooth;
   }
 
-  /* Smooth reveal animations - no flashing */
-  @keyframes reveal-fade-up {
-    from {
-      opacity: 0.7;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Standard scroll reveal animation - no layout shifts */
+  .reveal {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    will-change: opacity, transform;
   }
 
-  /* Base state - always visible to prevent flash */
-  .animate-fade-in,
-  .animate-fade-in-up,
-  .animate-scale-in {
+  .reveal[data-revealed="true"] {
     opacity: 1;
     transform: none;
   }
 
-  /* Only animate on first reveal for offscreen elements */
-  .animate-fade-in-up.animate-in {
-    animation: reveal-fade-up 0.6s ease-out;
-  }
-
-  /* Ensure no double animations */
-  .animate-fade-in.animate-in,
-  .animate-scale-in.animate-in {
-    animation: reveal-fade-up 0.5s ease-out;
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 
   /* Staggered animations */

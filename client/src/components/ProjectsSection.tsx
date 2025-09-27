@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
-import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
+import { useInViewAnimation } from "@/hooks/useInViewAnimation";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { Project } from "@shared/schema";
@@ -14,17 +14,14 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, index }: ProjectCardProps) {
   const cardAnimation = useInViewAnimation<HTMLDivElement>({ 
-    delay: index * 200 
+    delay: index * 100 
   });
 
   return (
     <Card 
       ref={cardAnimation.elementRef}
-      className={getAnimationClasses(
-        cardAnimation.isInView,
-        'fade-in-up',
-        'hover-elevate hover-lift h-full transition-all-smooth'
-      )} 
+      className="hover-elevate hover-lift h-full transition-all-smooth reveal"
+      data-revealed={cardAnimation.isInView}
       data-testid={`project-${project.id}`}
     >
       <CardHeader>
@@ -87,7 +84,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 }
 
 export function ProjectsSection() {
-  const headerAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
+  const headerAnimation = useInViewAnimation<HTMLHeadingElement>();
   
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({
     queryKey: ["/api/projects/featured"],
@@ -133,11 +130,8 @@ export function ProjectsSection() {
         <div className="mb-20">
           <h2 
             ref={headerAnimation.elementRef}
-            className={getAnimationClasses(
-              headerAnimation.isInView,
-              'fade-in-up',
-              'text-4xl font-medium text-foreground mb-6'
-            )}
+            className="text-4xl font-medium text-foreground mb-6 reveal"
+            data-revealed={headerAnimation.isInView}
           >
             Selected Work
           </h2>
