@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import headshot from "@assets/generated_images/Professional_developer_headshot_portrait_1f9cea77.png";
 
 export function HeroSection() {
   const scrollToSection = (id: string) => {
@@ -12,16 +11,6 @@ export function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 py-24">
       <div className="max-w-4xl mx-auto text-center space-y-8">
-        {/* Profile Image */}
-        <div className="flex justify-center mb-8">
-          <img
-            src={headshot}
-            alt="Professional headshot"
-            className="w-48 h-48 rounded-full border-2 border-border object-cover"
-            data-testid="hero-image"
-          />
-        </div>
-
         {/* Main Content */}
         <div className="space-y-6">
           <Badge variant="secondary" className="text-sm">
@@ -30,7 +19,7 @@ export function HeroSection() {
           
           <h1 className="text-5xl font-bold text-foreground leading-tight">
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Alex Johnson
             </span>
           </h1>
