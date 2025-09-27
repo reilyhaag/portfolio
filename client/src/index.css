@@ -166,7 +166,7 @@
 
   --popover-border: 0 0% 26%;
 
-  --primary: 9 75% 61%;
+  --primary: 140 85% 55%;
 
   --primary-foreground: 0 0% 100%;
 
@@ -178,7 +178,7 @@
 
   --muted-foreground: 45 15% 46%;
 
-  --accent: 25 45% 20%;
+  --accent: 140 25% 20%;
 
   --accent-foreground: 45 25% 85%;
 
@@ -187,7 +187,7 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 20 14% 18%;
-  --ring: 9 75% 61%;
+  --ring: 140 85% 55%;
   --chart-1: 203.8863 88.2845% 53.1373%;
   --chart-2: 159.7826 100% 36.0784%;
   --chart-3: 42.0290 92.8251% 56.2745%;
