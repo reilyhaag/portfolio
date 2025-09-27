@@ -72,7 +72,7 @@ export function ContactSection() {
         <div className="mb-20">
           <h2 className="text-4xl font-medium text-foreground mb-8">Let's Connect</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            I'm always interested in new opportunities and meaningful collaborations.
+            I'm always interested in meaningful collaborations and new projects.
           </p>
         </div>
 
@@ -184,11 +184,6 @@ export function ContactSection() {
               </CardContent>
             </Card>
 
-            <div className="text-center">
-              <Badge variant="secondary" className="text-xs">
-                Currently open to new opportunities
-              </Badge>
-            </div>
           </div>
         </div>
       </div>
