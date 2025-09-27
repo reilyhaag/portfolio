@@ -270,31 +270,31 @@ html {
     animation: scale-in 0.4s ease-out;
   }
 
-  /* Viewport-based animations */
+  /* Simplified viewport-based animations - prevent flashing */
   .animate-fade-in.animate-out {
-    opacity: 0;
+    opacity: 1; /* Start visible to prevent flash */
   }
 
   .animate-fade-in.animate-in {
-    animation: fade-in 0.8s ease-out;
+    animation: fade-in 0.6s ease-out;
   }
 
   .animate-fade-in-up.animate-out {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1; /* Start visible to prevent flash */
+    transform: translateY(0);
   }
 
   .animate-fade-in-up.animate-in {
-    animation: fade-in-up 0.8s ease-out;
+    animation: fade-in-up 0.6s ease-out;
   }
 
   .animate-scale-in.animate-out {
-    opacity: 0;
-    transform: scale(0.95);
+    opacity: 1; /* Start visible to prevent flash */
+    transform: scale(1);
   }
 
   .animate-scale-in.animate-in {
-    animation: scale-in 0.6s ease-out;
+    animation: scale-in 0.4s ease-out;
   }
 
   /* Staggered animations */
