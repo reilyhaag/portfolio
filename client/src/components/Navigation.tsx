@@ -2,14 +2,32 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { Link, useLocation } from "wouter";
+import { useEffect } from "react";
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
   const [location] = useLocation();
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+  // Handle hash fragments when page loads
+  useEffect(() => {
+    if (location === "/" && window.location.hash) {
+      const sectionId = window.location.hash.slice(1);
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [location]);
+
+  const handleNavClick = (sectionId: string) => {
+    if (location === "/") {
+      // If we're on the homepage, just scroll to the section
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // If we're on another page, navigate to home then scroll
+      window.location.href = `/#${sectionId}`;
+    }
   };
 
   return (
@@ -26,29 +44,29 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="sm"
-              asChild
+              onClick={() => handleNavClick("work")}
               data-testid="nav-work"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              <Link href="/#work">Work</Link>
+              Work
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              asChild
+              onClick={() => handleNavClick("about")}
               data-testid="nav-about"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              <Link href="/#about">About</Link>
+              About
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              asChild
+              onClick={() => handleNavClick("contact")}
               data-testid="nav-contact"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              <Link href="/#contact">Contact</Link>
+              Contact
             </Button>
 
             <Button
