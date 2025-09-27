@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global smooth scrolling for hash navigation */
+html {
+  scroll-behavior: smooth;
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .10);

@@ -30,25 +30,25 @@ export function Navigation() {
               data-testid="nav-work"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              <Link href="/projects">Work</Link>
+              <Link href="/#work">Work</Link>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => scrollToSection("about")}
+              asChild
               data-testid="nav-about"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              About
+              <Link href="/#about">About</Link>
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => scrollToSection("contact")}
+              asChild
               data-testid="nav-contact"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              Contact
+              <Link href="/#contact">Contact</Link>
             </Button>
 
             <Button

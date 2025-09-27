@@ -54,19 +54,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Optional: Get contact messages (for admin use)
-  app.get("/api/contact", async (req, res) => {
-    try {
-      const messages = await storage.getContactMessages();
-      res.json(messages);
-    } catch (error) {
-      console.error("Error fetching contact messages:", error);
-      res.status(500).json({
-        success: false,
-        message: "Error fetching messages"
-      });
-    }
-  });
+  // Contact messages retrieval - disabled for security (unauthenticated access to sensitive data)
+  // Enable only when proper admin authentication is implemented
+  // app.get("/api/contact", async (req, res) => {
+  //   try {
+  //     const messages = await storage.getContactMessages();
+  //     res.json(messages);
+  //   } catch (error) {
+  //     console.error("Error fetching contact messages:", error);
+  //     res.status(500).json({
+  //       success: false,
+  //       message: "Error fetching messages"
+  //     });
+  //   }
+  // });
 
   // Projects API endpoints
   app.get("/api/projects", async (req, res) => {
@@ -114,30 +115,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/projects", async (req, res) => {
-    try {
-      const validatedData = insertProjectSchema.parse(req.body);
-      const project = await storage.createProject(validatedData);
-      res.status(201).json(project);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          success: false,
-          message: "Please check your input",
-          errors: error.errors.map(e => ({
-            field: e.path.join('.'),
-            message: e.message
-          }))
-        });
-      } else {
-        console.error("Project creation error:", error);
-        res.status(500).json({
-          success: false,
-          message: "Something went wrong creating the project."
-        });
-      }
-    }
-  });
+  // Project creation endpoint - disabled for security (unauthenticated write access)
+  // Enable only when proper authentication is implemented
+  // app.post("/api/projects", async (req, res) => {
+  //   try {
+  //     const validatedData = insertProjectSchema.parse(req.body);
+  //     const project = await storage.createProject(validatedData);
+  //     res.status(201).json(project);
+  //   } catch (error) {
+  //     if (error instanceof z.ZodError) {
+  //       res.status(400).json({
+  //         success: false,
+  //         message: "Please check your input",
+  //         errors: error.errors.map(e => ({
+  //           field: e.path.join('.'),
+  //           message: e.message
+  //         }))
+  //       });
+  //     } else {
+  //       console.error("Project creation error:", error);
+  //       res.status(500).json({
+  //         success: false,
+  //         message: "Something went wrong creating the project."
+  //       });
+  //     }
+  //   }
+  // });
 
   const httpServer = createServer(app);
 
