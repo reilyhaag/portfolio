@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type ContactMessage, type InsertContactMessage, type Project, type InsertProject, projects } from "@shared/schema";
+import { type User, type InsertUser, type Project, type InsertProject, projects } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
@@ -10,8 +10,6 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  createContactMessage(contactMessage: InsertContactMessage): Promise<ContactMessage>;
-  getContactMessages(): Promise<ContactMessage[]>;
   getProjects(): Promise<Project[]>;
   getFeaturedProjects(): Promise<Project[]>;
   getProject(id: string): Promise<Project | undefined>;
@@ -20,11 +18,9 @@ export interface IStorage {
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
-  private contactMessages: Map<string, ContactMessage>;
 
   constructor() {
     this.users = new Map();
-    this.contactMessages = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -44,22 +40,6 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  async createContactMessage(insertContactMessage: InsertContactMessage): Promise<ContactMessage> {
-    const id = randomUUID();
-    const contactMessage: ContactMessage = { 
-      ...insertContactMessage, 
-      id,
-      createdAt: new Date()
-    };
-    this.contactMessages.set(id, contactMessage);
-    return contactMessage;
-  }
-
-  async getContactMessages(): Promise<ContactMessage[]> {
-    return Array.from(this.contactMessages.values()).sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-    );
-  }
 
   // Database-backed project methods
   async getProjects(): Promise<Project[]> {
