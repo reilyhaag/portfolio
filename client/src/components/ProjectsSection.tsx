@@ -80,25 +80,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               </a>
             </Button>
           )}
-          {(project.showLinks !== false) && project.detailsUrl && (
-            <Button
-              variant="outline"
-              size="default"
-              className={`${project.liveUrl ? 'flex-1' : 'flex-1'} min-h-[44px] focus-visible-ring`}
-              asChild
-              data-testid={`details-${project.id}`}
-            >
-              <a 
-                href={project.detailsUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label={`View ${project.title} details`}
-              >
-                <Github className="h-4 w-4 mr-2" />
-                Details
-              </a>
-            </Button>
-          )}
         </div>
       </CardContent>
     </Card>
