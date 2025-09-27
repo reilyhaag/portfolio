@@ -23,7 +23,7 @@ export function ContactSection() {
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "hhttps://www.linkedin.com/in/reily-haag/",
+      href: "https://www.linkedin.com/in/reily-haag/",
       username: "Reily Haag",
     },
     {
