@@ -1,7 +1,6 @@
-import { type User, type InsertUser, type Project, type InsertProject, projects } from "@shared/schema";
+import { type User, type InsertUser, type Project, type InsertProject } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { supabase } from "./supabase";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -41,28 +40,38 @@ export class MemStorage implements IStorage {
   }
 
 
-  // Database-backed project methods
+  // Supabase REST API project methods
   async getProjects(): Promise<Project[]> {
-    const result = await db.select().from(projects).where(eq(projects.status, "active")).orderBy(projects.sortOrder, desc(projects.createdAt));
+    const result = await supabase.get('projects', {
+      'status': 'eq.active',
+      'order': 'sort_order.asc,created_at.desc'
+    });
     return result;
   }
 
   async getFeaturedProjects(): Promise<Project[]> {
-    const result = await db.select().from(projects).where(eq(projects.featured, true)).orderBy(projects.sortOrder, desc(projects.createdAt));
+    const result = await supabase.get('projects', {
+      'featured': 'eq.true',
+      'status': 'eq.active', 
+      'order': 'sort_order.asc,created_at.desc'
+    });
     return result;
   }
 
   async getProject(id: string): Promise<Project | undefined> {
-    const result = await db.select().from(projects).where(eq(projects.id, id));
+    const result = await supabase.get('projects', {
+      'id': `eq.${id}`,
+      'limit': '1'
+    });
     return result[0];
   }
 
   async createProject(insertProject: InsertProject): Promise<Project> {
-    const result = await db.insert(projects).values({
+    const result = await supabase.post('projects', {
       ...insertProject,
-      updatedAt: new Date()
-    }).returning();
-    return result[0];
+      updated_at: new Date().toISOString()
+    });
+    return result;
   }
 }
 
