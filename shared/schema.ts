@@ -17,6 +17,7 @@ export const projects = pgTable("projects", {
   imageUrl: text("image_url"),
   technologies: text("technologies").array().notNull(),
   featured: boolean("featured").default(false).notNull(),
+  showLinks: boolean("show_links").default(true).notNull(),
   liveUrl: text("live_url"),
   detailsUrl: text("details_url"),
   status: text("status").notNull().default("active"),
@@ -41,6 +42,7 @@ export const insertProjectSchema = createInsertSchema(projects).omit({
   longDescription: z.string().optional(),
   imageUrl: z.string().optional(),
   technologies: z.array(z.string()).min(1, "At least one technology is required"),
+  showLinks: z.boolean().default(true).optional(),
   status: z.enum(["active", "archived", "draft"]).default("active"),
 });
 

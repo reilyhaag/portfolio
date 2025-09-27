@@ -17,6 +17,7 @@ async function setupSupabaseDatabase() {
         details_url TEXT,
         technologies TEXT[] NOT NULL,
         featured BOOLEAN DEFAULT false,
+        show_links BOOLEAN DEFAULT true NOT NULL,
         sort_order INTEGER DEFAULT 0,
         status TEXT DEFAULT 'active' CHECK (status IN ('active', 'archived', 'draft')),
         created_at TIMESTAMPTZ DEFAULT NOW(),
