@@ -52,14 +52,10 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="py-24 px-6">
+    <section className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Featured Projects</h2>
-          <div className="w-20 h-1 bg-primary mx-auto mb-8"></div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of projects I've worked on, showcasing different technologies and problem-solving approaches.
-          </p>
+        <div className="mb-20">
+          <h2 className="text-4xl font-medium text-foreground mb-6">Selected Work</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

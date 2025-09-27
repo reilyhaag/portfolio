@@ -67,14 +67,12 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-24 px-6 bg-muted/30">
+    <section id="contact" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-primary mx-auto mb-8"></div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            I'm always interested in new opportunities and exciting projects. 
-            Let's discuss how we can work together.
+        <div className="mb-20">
+          <h2 className="text-4xl font-medium text-foreground mb-8">Let's Connect</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            I'm always interested in new opportunities and meaningful collaborations.
           </p>
         </div>
 
