@@ -9,13 +9,14 @@ export interface UseInViewAnimationOptions {
 
 export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options: UseInViewAnimationOptions = {}) {
   const {
-    threshold = 0.2,
+    threshold = 0.1,
     rootMargin = '0px 0px -10% 0px',
     triggerOnce = true,
     delay = 0,
   } = options;
 
-  const [isInView, setIsInView] = useState(false); // Start as false to enable scroll reveals
+  const [isInView, setIsInView] = useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
   const elementRef = useRef<T>(null);
 
   useEffect(() => {
@@ -27,6 +28,17 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
     
     if (prefersReducedMotion) {
       setIsInView(true);
+      setSkipAnimation(true);
+      return;
+    }
+
+    // Check if element is initially in viewport to skip animation
+    const rect = element.getBoundingClientRect();
+    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isInitiallyVisible) {
+      setIsInView(true);
+      setSkipAnimation(true);
       return;
     }
 
@@ -69,6 +81,7 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
   return {
     elementRef,
     isInView,
+    skipAnimation,
   };
 }
 
@@ -76,9 +89,16 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
 export function getAnimationClasses(
   isInView: boolean, 
   animationType: 'fade-in' | 'fade-in-up' | 'scale-in' = 'fade-in-up',
-  baseClasses = ''
+  baseClasses = '',
+  skipAnimation = false
 ) {
   const animationClass = `animate-${animationType}`;
+  
+  // If skipping animation, just return base classes
+  if (skipAnimation) {
+    return baseClasses.trim();
+  }
+  
   const visibilityClass = isInView ? 'animate-in' : 'animate-out';
   
   return `${baseClasses} ${animationClass} ${visibilityClass}`.trim();

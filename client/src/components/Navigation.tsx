@@ -36,7 +36,7 @@ export function Navigation() {
         <div className="flex items-center justify-between animate-fade-in">
           <div className="text-lg font-medium text-foreground transition-colors-smooth">
             <Link href="/" className="hover:opacity-80 transition-opacity">
-              AJ
+              RH
             </Link>
           </div>
           
