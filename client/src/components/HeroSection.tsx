@@ -13,10 +13,6 @@ export function HeroSection() {
       <div className="max-w-4xl mx-auto text-center space-y-8">
         {/* Main Content */}
         <div className="space-y-6">
-          <Badge variant="secondary" className="text-sm">
-            Available for new opportunities
-          </Badge>
-          
           <h1 className="text-5xl font-bold text-foreground leading-tight">
             Hi, I'm{" "}
             <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
@@ -25,18 +21,9 @@ export function HeroSection() {
           </h1>
           
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Full-stack developer passionate about creating exceptional user experiences 
-            and building scalable applications with modern technologies.
+            Creative professional passionate about building meaningful experiences 
+            and bringing innovative ideas to life.
           </p>
-
-          {/* Technologies */}
-          <div className="flex flex-wrap justify-center gap-2 mt-8">
-            {["React", "TypeScript", "Node.js", "Python", "AWS", "PostgreSQL"].map((tech) => (
-              <Badge key={tech} variant="outline" className="text-sm">
-                {tech}
-              </Badge>
-            ))}
-          </div>
         </div>
 
         {/* CTA Buttons */}
