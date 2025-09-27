@@ -13,6 +13,8 @@ export const projects = pgTable("projects", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
   description: text("description").notNull(),
+  longDescription: text("long_description"),
+  imageUrl: text("image_url"),
   technologies: text("technologies").array().notNull(),
   featured: boolean("featured").default(false).notNull(),
   liveUrl: text("live_url"),
@@ -36,6 +38,8 @@ export const insertProjectSchema = createInsertSchema(projects).omit({
 }).extend({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
+  longDescription: z.string().optional(),
+  imageUrl: z.string().optional(),
   technologies: z.array(z.string()).min(1, "At least one technology is required"),
   status: z.enum(["active", "archived", "draft"]).default("active"),
 });
