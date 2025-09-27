@@ -86,7 +86,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 }
 
 export default function Projects() {
-  const headerAnimation = useInViewAnimation<HTMLHeadingElement>();
   const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 100 });
 
   // Ensure page loads at top position
@@ -144,11 +143,7 @@ export default function Projects() {
         </div>
 
         <div className="mb-20">
-          <h1 
-            ref={headerAnimation.elementRef}
-            className="text-5xl font-medium text-foreground mb-8 reveal"
-            data-revealed={headerAnimation.isInView}
-          >
+          <h1 className="text-5xl font-medium text-foreground mb-8">
             All Projects
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">

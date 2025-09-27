@@ -84,7 +84,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 }
 
 export function ProjectsSection() {
-  const headerAnimation = useInViewAnimation<HTMLHeadingElement>();
   
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({
     queryKey: ["/api/projects/featured"],
@@ -128,11 +127,7 @@ export function ProjectsSection() {
     <section id="work" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="mb-20">
-          <h2 
-            ref={headerAnimation.elementRef}
-            className="text-4xl font-medium text-foreground mb-6 reveal"
-            data-revealed={headerAnimation.isInView}
-          >
+          <h2 className="text-4xl font-medium text-foreground mb-6">
             Selected Work
           </h2>
         </div>
