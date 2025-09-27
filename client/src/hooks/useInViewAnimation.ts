@@ -15,7 +15,7 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
     delay = 0,
   } = options;
 
-  const [isInView, setIsInView] = useState(true); // Start as true to prevent flashing
+  const [isInView, setIsInView] = useState(false); // Start as false to enable scroll reveals
   const elementRef = useRef<T>(null);
 
   useEffect(() => {

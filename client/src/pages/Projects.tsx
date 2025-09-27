@@ -98,7 +98,7 @@ export default function Projects() {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
 
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({

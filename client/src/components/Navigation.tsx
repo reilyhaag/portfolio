@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
 
   // Handle hash fragments when page loads
   useEffect(() => {
@@ -26,7 +26,7 @@ export function Navigation() {
       element?.scrollIntoView({ behavior: "smooth" });
     } else {
       // If we're on another page, navigate to home then scroll
-      window.location.href = `/#${sectionId}`;
+      navigate(`/#${sectionId}`);
     }
   };
 
