@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
 
 export function HeroSection() {
   const scrollToSection = (id: string) => {
@@ -8,21 +9,42 @@ export function HeroSection() {
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const titleAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
+  const subtitleAnimation = useInViewAnimation<HTMLParagraphElement>({ delay: 300 });
+  const ctaAnimation = useInViewAnimation<HTMLDivElement>({ delay: 500 });
+
   return (
     <section className="min-h-screen flex items-center justify-center px-6">
       <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-6xl md:text-7xl font-medium text-foreground mb-8 leading-tight animate-fade-in-up">
+        <h1 
+          ref={titleAnimation.elementRef}
+          className={getAnimationClasses(
+            titleAnimation.isInView, 
+            'fade-in-up', 
+            'text-6xl md:text-7xl font-medium text-foreground mb-8 leading-tight'
+          )}
+        >
           Alex Johnson
         </h1>
         
-        <p className="text-xl text-muted-foreground mb-12 leading-relaxed animate-fade-in-up animate-delay-200">
+        <p 
+          ref={subtitleAnimation.elementRef}
+          className={getAnimationClasses(
+            subtitleAnimation.isInView, 
+            'fade-in-up', 
+            'text-xl text-muted-foreground mb-12 leading-relaxed'
+          )}
+        >
           Creative professional focused on meaningful experiences.
         </p>
 
-        <div className="animate-fade-in-up animate-delay-400">
+        <div 
+          ref={ctaAnimation.elementRef}
+          className={getAnimationClasses(ctaAnimation.isInView, 'fade-in-up')}
+        >
           <Button 
             size="lg" 
-            className="px-8 rounded-full transition-all-smooth hover-lift focus-visible-ring"
+            className="px-8 rounded-full focus-visible-ring"
             onClick={() => scrollToSection("contact")}
             data-testid="cta-contact"
           >

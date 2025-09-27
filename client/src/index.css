@@ -265,6 +265,33 @@
     animation: scale-in 0.4s ease-out;
   }
 
+  /* Viewport-based animations */
+  .animate-fade-in.animate-out {
+    opacity: 0;
+  }
+
+  .animate-fade-in.animate-in {
+    animation: fade-in 0.8s ease-out;
+  }
+
+  .animate-fade-in-up.animate-out {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .animate-fade-in-up.animate-in {
+    animation: fade-in-up 0.8s ease-out;
+  }
+
+  .animate-scale-in.animate-out {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  .animate-scale-in.animate-in {
+    animation: scale-in 0.6s ease-out;
+  }
+
   /* Staggered animations */
   .animate-delay-100 {
     animation-delay: 0.1s;
