@@ -92,9 +92,13 @@ export default function Projects() {
   const headerAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
   const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 300 });
 
-  // Scroll to top when page loads
+  // Ensure page loads at top position
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Prevent scroll restoration and ensure page starts at top
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({
@@ -177,6 +181,7 @@ export default function Projects() {
             <p className="text-muted-foreground text-lg">No projects found.</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
