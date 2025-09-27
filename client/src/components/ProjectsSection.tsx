@@ -61,7 +61,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         <div className="flex gap-3 mt-6">
-          {project.liveUrl && (
+          {(project.showLinks !== false) && project.liveUrl && (
             <Button
               variant="default"
               size="default"
@@ -80,7 +80,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               </a>
             </Button>
           )}
-          {project.detailsUrl && (
+          {(project.showLinks !== false) && project.detailsUrl && (
             <Button
               variant="outline"
               size="default"

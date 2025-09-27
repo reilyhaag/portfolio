@@ -17,7 +17,7 @@ export const projects = pgTable("projects", {
   imageUrl: text("image_url"),
   technologies: text("technologies").array().notNull(),
   featured: boolean("featured").default(false).notNull(),
-  showLinks: boolean("show_links").default(true).notNull(),
+  showLinks: boolean("show_links").default(true),
   liveUrl: text("live_url"),
   detailsUrl: text("details_url"),
   status: text("status").notNull().default("active"),
