@@ -44,7 +44,7 @@ export function HeroSection() {
         >
           <Button 
             size="lg" 
-            className="px-8 py-3 min-h-[44px] rounded-full focus-visible-ring"
+            className="px-8 py-3 min-h-[44px] focus-visible-ring"
             onClick={() => scrollToSection("contact")}
             data-testid="cta-contact"
           >
