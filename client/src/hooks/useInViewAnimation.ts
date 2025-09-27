@@ -24,6 +24,7 @@ export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options:
 
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
     if (prefersReducedMotion) {
       setIsInView(true);
       return;

@@ -70,8 +70,8 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         <div className="flex gap-3 mt-6">
           <Button
             variant="default"
-            size="sm"
-            className="flex-1 focus-visible-ring"
+            size="default"
+            className="flex-1 min-h-[44px] focus-visible-ring"
             asChild
             data-testid={`demo-${project.id}`}
           >
@@ -87,8 +87,8 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </Button>
           <Button
             variant="outline"
-            size="sm"
-            className="flex-1 focus-visible-ring"
+            size="default"
+            className="flex-1 min-h-[44px] focus-visible-ring"
             asChild
             data-testid={`github-${project.id}`}
           >
@@ -180,6 +180,7 @@ export function ProjectsSection() {
           <Button 
             variant="outline" 
             size="lg"
+            className="min-h-[44px]"
             onClick={() => console.log("View all projects clicked")}
             data-testid="view-all-projects"
           >

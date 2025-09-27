@@ -58,24 +58,32 @@ export function ContactSection() {
             </CardHeader>
             <CardContent className="space-y-4">
               {contactInfo.map((item) => (
-                <div key={item.label} className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
-                    <item.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">{item.label}</p>
-                    {item.href && item.href !== "#" ? (
-                      <a 
-                        href={item.href} 
-                        className="text-foreground font-medium hover:text-primary transition-colors-smooth"
-                        data-testid="link-email"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-foreground font-medium">{item.value}</p>
-                    )}
-                  </div>
+                <div key={item.label}>
+                  {item.href && item.href !== "#" ? (
+                    <a 
+                      href={item.href}
+                      className="flex items-center gap-3 p-2 rounded-md hover-elevate transition-all-smooth min-h-[44px]"
+                      data-testid="link-email"
+                    >
+                      <div className="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
+                        <item.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">{item.label}</p>
+                        <p className="text-foreground font-medium">{item.value}</p>
+                      </div>
+                    </a>
+                  ) : (
+                    <div className="flex items-center gap-3 p-2 min-h-[44px]">
+                      <div className="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
+                        <item.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">{item.label}</p>
+                        <p className="text-foreground font-medium">{item.value}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </CardContent>
@@ -95,7 +103,7 @@ export function ContactSection() {
                   <Button
                     key={social.label}
                     variant="ghost"
-                    className="justify-start"
+                    className="justify-start min-h-[44px] py-3"
                     asChild
                     data-testid={`social-${social.label.toLowerCase()}`}
                   >
