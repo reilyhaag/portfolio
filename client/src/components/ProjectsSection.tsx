@@ -151,7 +151,7 @@ export function ProjectsSection() {
   ];
 
   return (
-    <section className="py-32 px-6">
+    <section id="work" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="mb-20">
           <h2 
@@ -181,7 +181,10 @@ export function ProjectsSection() {
             variant="outline" 
             size="lg"
             className="min-h-[44px]"
-            onClick={() => console.log("View all projects clicked")}
+            onClick={() => {
+              const projectsSection = document.getElementById('work');
+              projectsSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
             data-testid="view-all-projects"
           >
             View All Projects
