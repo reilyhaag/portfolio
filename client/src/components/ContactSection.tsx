@@ -5,19 +5,53 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import type { InsertContactMessage } from "@shared/schema";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
+  });
+
+  const { toast } = useToast();
+
+  const contactMutation = useMutation({
+    mutationFn: async (data: InsertContactMessage) => {
+      return apiRequest("/api/contact", {
+        method: "POST",
+        body: data,
+      });
+    },
+    onSuccess: (response) => {
+      toast({
+        title: "Message Sent",
+        description: response.message || "Thank you for your message! I'll get back to you soon.",
+      });
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
+    contactMutation.mutate(formData);
   };
 
   const handleInputChange = (field: string, value: string) => {
