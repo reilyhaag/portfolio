@@ -6,6 +6,7 @@ import { ExternalLink, Github, ArrowLeft } from "lucide-react";
 import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
+import { useEffect } from "react";
 import type { Project } from "@shared/schema";
 
 interface ProjectCardProps {
@@ -91,6 +92,11 @@ export default function Projects() {
   const headerAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
   const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 300 });
 
+  // Scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({
     queryKey: ["/api/projects"],
   });
@@ -119,8 +125,10 @@ export default function Projects() {
   }
 
   return (
-    <div className="min-h-screen py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen">
+      <Navigation />
+      <div className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
         <div 
           ref={backButtonAnimation.elementRef}
           className={getAnimationClasses(
