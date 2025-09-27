@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import { Link, useLocation } from "wouter";
 
 export function Navigation() {
   const { theme, setTheme } = useTheme();
+  const [location] = useLocation();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -15,18 +17,20 @@ export function Navigation() {
       <div className="max-w-6xl mx-auto px-6 py-6">
         <div className="flex items-center justify-between animate-fade-in">
           <div className="text-lg font-medium text-foreground transition-colors-smooth">
-            AJ
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              AJ
+            </Link>
           </div>
           
           <div className="flex items-center gap-8">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => scrollToSection("work")}
+              asChild
               data-testid="nav-work"
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
-              Work
+              <Link href="/projects">Work</Link>
             </Button>
             <Button
               variant="ghost"
@@ -45,6 +49,16 @@ export function Navigation() {
               className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
             >
               Contact
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              data-testid="theme-toggle"
+              className="text-muted-foreground hover:text-foreground transition-colors-smooth focus-visible-ring"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
           </div>
         </div>

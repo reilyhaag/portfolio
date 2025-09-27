@@ -1,9 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ArrowLeft } from "lucide-react";
 import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { Project } from "@shared/schema";
 
@@ -105,64 +105,74 @@ function ProjectCard({ project, index }: ProjectCardProps) {
   );
 }
 
-export function ProjectsSection() {
+export default function Projects() {
   const headerAnimation = useInViewAnimation<HTMLHeadingElement>({ delay: 100 });
-  
+  const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 300 });
+
   const { data: projects = [], isLoading, error } = useQuery<Project[]>({
-    queryKey: ["/api/projects/featured"],
+    queryKey: ["/api/projects"],
   });
 
   if (isLoading) {
     return (
-      <section id="work" className="py-32 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-20">
-            <h2 className="text-4xl font-medium text-foreground mb-6">
-              Selected Work
-            </h2>
-          </div>
-          <div className="text-center py-20">
-            <div className="animate-pulse text-muted-foreground">Loading projects...</div>
-          </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-pulse text-muted-foreground">Loading projects...</div>
         </div>
-      </section>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <section id="work" className="py-32 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-20">
-            <h2 className="text-4xl font-medium text-foreground mb-6">
-              Selected Work
-            </h2>
-          </div>
-          <div className="text-center py-20">
-            <div className="text-red-500 mb-4">Error loading projects</div>
-          </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 mb-4">Error loading projects</div>
+          <Button asChild>
+            <Link href="/">Return Home</Link>
+          </Button>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section id="work" className="py-32 px-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen py-32 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div 
+          ref={backButtonAnimation.elementRef}
+          className={getAnimationClasses(
+            backButtonAnimation.isInView,
+            'fade-in-up',
+            'mb-8'
+          )}
+        >
+          <Button variant="ghost" asChild data-testid="back-to-home">
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Home
+            </Link>
+          </Button>
+        </div>
+
         <div className="mb-20">
-          <h2 
+          <h1 
             ref={headerAnimation.elementRef}
             className={getAnimationClasses(
               headerAnimation.isInView,
               'fade-in-up',
-              'text-4xl font-medium text-foreground mb-6'
+              'text-5xl font-medium text-foreground mb-8'
             )}
           >
-            Selected Work
-          </h2>
+            All Projects
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-3xl">
+            A comprehensive collection of my creative work, spanning brand identity, 
+            user experience design, creative facilitation, and storytelling projects.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <ProjectCard 
               key={project.id} 
@@ -172,20 +182,12 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="min-h-[44px]"
-            asChild
-            data-testid="view-all-projects"
-          >
-            <Link href="/projects">
-              View All Projects
-            </Link>
-          </Button>
-        </div>
+        {projects.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-muted-foreground text-lg">No projects found.</p>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 }

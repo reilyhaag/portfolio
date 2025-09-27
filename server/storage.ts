@@ -1,5 +1,7 @@
-import { type User, type InsertUser, type ContactMessage, type InsertContactMessage } from "@shared/schema";
+import { type User, type InsertUser, type ContactMessage, type InsertContactMessage, type Project, type InsertProject, projects } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -10,6 +12,10 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   createContactMessage(contactMessage: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
+  getProjects(): Promise<Project[]>;
+  getFeaturedProjects(): Promise<Project[]>;
+  getProject(id: string): Promise<Project | undefined>;
+  createProject(project: InsertProject): Promise<Project>;
 }
 
 export class MemStorage implements IStorage {
@@ -53,6 +59,30 @@ export class MemStorage implements IStorage {
     return Array.from(this.contactMessages.values()).sort(
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
     );
+  }
+
+  // Database-backed project methods
+  async getProjects(): Promise<Project[]> {
+    const result = await db.select().from(projects).where(eq(projects.status, "active")).orderBy(projects.sortOrder, desc(projects.createdAt));
+    return result;
+  }
+
+  async getFeaturedProjects(): Promise<Project[]> {
+    const result = await db.select().from(projects).where(eq(projects.featured, true)).orderBy(projects.sortOrder, desc(projects.createdAt));
+    return result;
+  }
+
+  async getProject(id: string): Promise<Project | undefined> {
+    const result = await db.select().from(projects).where(eq(projects.id, id));
+    return result[0];
+  }
+
+  async createProject(insertProject: InsertProject): Promise<Project> {
+    const result = await db.insert(projects).values({
+      ...insertProject,
+      updatedAt: new Date()
+    }).returning();
+    return result[0];
   }
 }
 
