@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, ArrowLeft } from "lucide-react";
 import { useInViewAnimation, getAnimationClasses } from "@/hooks/useInViewAnimation";
 import { Link } from "wouter";
+import { Navigation } from "@/components/Navigation";
 import type { Project } from "@shared/schema";
 
 interface ProjectCardProps {
