@@ -7,49 +7,42 @@ export function ProjectsSection() {
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Dashboard",
-      description: "A comprehensive admin dashboard for managing online store operations with real-time analytics, inventory management, and order processing capabilities.",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Chart.js", "Node.js"],
-      liveUrl: "#",
-      githubUrl: "#",
+      title: "Brand Identity System",
+      description: "Complete visual identity redesign for a sustainable fashion startup, including logo design, color palette, typography, and brand guidelines.",
+      technologies: ["Brand Strategy", "Visual Design", "Identity Systems"],
+      liveUrl: "https://example-brand.com",
+      githubUrl: "https://github.com/alexjohnson/brand-project",
       featured: true,
     },
     {
       id: 2,
-      title: "Task Management App",
-      description: "Collaborative project management tool with drag-and-drop kanban boards, team collaboration features, and deadline tracking.",
-      technologies: ["Next.js", "Prisma", "PostgreSQL", "Framer Motion"],
-      liveUrl: "#",
-      githubUrl: "#",
+      title: "Digital Experience Platform",
+      description: "User experience design and strategy for a fintech application focused on simplifying personal finance management.",
+      technologies: ["UX Research", "Interaction Design", "Prototyping"],
+      liveUrl: "https://fintech-demo.com",
+      githubUrl: "https://github.com/alexjohnson/fintech-ux",
       featured: true,
     },
     {
       id: 3,
-      title: "Weather Forecast App",
-      description: "Beautiful weather application with location-based forecasts, interactive maps, and customizable alerts for weather conditions.",
-      technologies: ["React Native", "Redux", "OpenWeather API", "Maps"],
-      liveUrl: "#",
-      githubUrl: "#",
+      title: "Creative Workshop Series",
+      description: "Designed and facilitated a series of creative workshops for design thinking and innovation at a local design studio.",
+      technologies: ["Workshop Design", "Facilitation", "Creative Strategy"],
+      liveUrl: "https://workshop-series.com",
+      githubUrl: "https://github.com/alexjohnson/workshop-materials",
       featured: false,
     },
     {
       id: 4,
-      title: "Social Media Analytics",
-      description: "Analytics platform for social media managers to track engagement, audience insights, and content performance across platforms.",
-      technologies: ["Vue.js", "D3.js", "Express", "MongoDB", "AWS"],
-      liveUrl: "#",
-      githubUrl: "#",
+      title: "Storytelling Platform",
+      description: "Content strategy and visual design for a platform connecting storytellers with their audiences through immersive experiences.",
+      technologies: ["Content Strategy", "Visual Storytelling", "User Journey"],
+      liveUrl: "https://storytelling-platform.com",
+      githubUrl: "https://github.com/alexjohnson/storytelling-project",
       featured: false,
     },
   ];
 
-  const handleLiveDemo = (projectId: number) => {
-    console.log(`Opening live demo for project ${projectId}`);
-  };
-
-  const handleGithub = (projectId: number) => {
-    console.log(`Opening GitHub repo for project ${projectId}`);
-  };
 
   return (
     <section className="py-32 px-6">
@@ -103,21 +96,35 @@ export function ProjectsSection() {
                     variant="default"
                     size="sm"
                     className="flex-1 transition-all-smooth hover-lift focus-visible-ring"
-                    onClick={() => handleLiveDemo(project.id)}
+                    asChild
                     data-testid={`demo-${project.id}`}
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Live Demo
+                    <a 
+                      href={project.liveUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} project`}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      View Project
+                    </a>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     className="flex-1 transition-all-smooth hover-lift focus-visible-ring"
-                    onClick={() => handleGithub(project.id)}
+                    asChild
                     data-testid={`github-${project.id}`}
                   >
-                    <Github className="h-4 w-4 mr-2" />
-                    Code
+                    <a 
+                      href={project.githubUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} details`}
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      Details
+                    </a>
                   </Button>
                 </div>
               </CardContent>

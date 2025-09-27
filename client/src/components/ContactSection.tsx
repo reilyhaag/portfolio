@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MapPin, Phone, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
 
 export function ContactSection() {
@@ -28,14 +28,8 @@ export function ContactSection() {
     {
       icon: Mail,
       label: "Email",
-      value: "alex.johnson@email.com",
-      href: "mailto:alex.johnson@email.com",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
+      value: "hello@alexjohnson.com",
+      href: "mailto:hello@alexjohnson.com",
     },
     {
       icon: MapPin,
@@ -47,22 +41,22 @@ export function ContactSection() {
 
   const socialLinks = [
     {
-      icon: Github,
-      label: "GitHub",
-      href: "#",
-      username: "@alexjohnson",
-    },
-    {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "#",
-      username: "alex-johnson-dev",
+      href: "https://linkedin.com/in/alexjohnson",
+      username: "alexjohnson",
     },
     {
       icon: Twitter,
       label: "Twitter",
-      href: "#",
-      username: "@alexcodes",
+      href: "https://twitter.com/alexjohnson",
+      username: "@alexjohnson",
+    },
+    {
+      icon: Github,
+      label: "GitHub",
+      href: "https://github.com/alexjohnson",
+      username: "@alexjohnson",
     },
   ];
 
@@ -149,7 +143,16 @@ export function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">{item.label}</p>
-                      <p className="text-foreground font-medium">{item.value}</p>
+                      {item.href && item.href !== "#" ? (
+                        <a 
+                          href={item.href} 
+                          className="text-foreground font-medium hover:text-primary transition-colors-smooth"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        <p className="text-foreground font-medium">{item.value}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -169,15 +172,22 @@ export function ContactSection() {
                     <Button
                       key={social.label}
                       variant="ghost"
-                      className="justify-start hover-elevate"
-                      onClick={() => console.log(`Opening ${social.label}`)}
+                      className="justify-start hover-elevate transition-all-smooth"
+                      asChild
                       data-testid={`social-${social.label.toLowerCase()}`}
                     >
-                      <social.icon className="h-5 w-5 mr-3" />
-                      <div className="text-left">
-                        <div className="font-medium">{social.label}</div>
-                        <div className="text-sm text-muted-foreground">{social.username}</div>
-                      </div>
+                      <a 
+                        href={social.href} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={`Connect with me on ${social.label}`}
+                      >
+                        <social.icon className="h-5 w-5 mr-3" />
+                        <div className="text-left">
+                          <div className="font-medium">{social.label}</div>
+                          <div className="text-sm text-muted-foreground">{social.username}</div>
+                        </div>
+                      </a>
                     </Button>
                   ))}
                 </div>
