@@ -155,6 +155,13 @@ async function seedProjects() {
   ];
 
   try {
+    // Check if projects already exist
+    const existingProjects = await supabase.get('projects', { 'limit': '1' });
+    if (existingProjects.length > 0) {
+      console.log("✅ Projects already exist in database, skipping seeding");
+      return;
+    }
+
     for (const project of sampleProjects) {
       await supabase.post('projects', project);
       console.log(`✅ Created project: ${project.title}`);
@@ -162,6 +169,7 @@ async function seedProjects() {
     console.log("🎉 Database seeded successfully!");
   } catch (error) {
     console.error("❌ Error seeding projects:", error);
+    console.log("Details:", error);
   }
 }
 
