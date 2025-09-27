@@ -35,7 +35,7 @@ export function HeroSection() {
             'text-xl text-muted-foreground mb-12 leading-relaxed'
           )}
         >
-          Ops
+          Ops @ SFR3 Fund | Formerly Founding team @ Lekko & Founder @ spring.art | Stanford B.A./M.A
         </p>
 
         <div 

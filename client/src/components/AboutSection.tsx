@@ -17,13 +17,11 @@ export function AboutSection() {
 
         <div className="max-w-2xl">
           <p className="text-lg text-muted-foreground leading-relaxed mb-8 animate-fade-in-up animate-delay-200">
-            I'm a creative professional with a passion for building meaningful experiences 
-            that connect with people and solve real problems.
+            Former art historian now building and running tech enabled businesses. I like people who make things.
           </p>
           
           <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in-up animate-delay-300">
-            I believe in the power of simplicity and thoughtful design to create 
-            solutions that are both beautiful and functional.
+            If you're making something cool, let's talk.
           </p>
         </div>
       </div>

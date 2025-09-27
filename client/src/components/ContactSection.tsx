@@ -8,13 +8,13 @@ export function ContactSection() {
     {
       icon: Mail,
       label: "Email",
-      value: "hello@alexjohnson.com",
-      href: "mailto:hello@alexjohnson.com",
+      value: "reily@reilyhaag.com",
+      href: "mailto:reily@reilyhaag.com",
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "Los Angeles, CA",
       href: "#",
     },
   ];
@@ -23,20 +23,20 @@ export function ContactSection() {
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://linkedin.com/in/alexjohnson",
-      username: "alexjohnson",
+      href: "hhttps://www.linkedin.com/in/reily-haag/",
+      username: "Reily Haag",
     },
     {
       icon: Twitter,
-      label: "Twitter",
-      href: "https://twitter.com/alexjohnson",
-      username: "@alexjohnson",
+      label: "X",
+      href: "https://x.com/HaagReily",
+      username: "@haagreily",
     },
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/alexjohnson",
-      username: "@alexjohnson",
+      href: "https://github.com/reilyhaag",
+      username: "@reilyhaag",
     },
   ];
 
@@ -46,7 +46,7 @@ export function ContactSection() {
         <div className="mb-20">
           <h2 className="text-4xl font-medium text-foreground mb-8">Let's Connect</h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            I'm always interested in meaningful collaborations and new projects.
+            If you're building something cool or just want to chat, feel free to reach out. I like to help.
           </p>
         </div>
 
@@ -93,11 +93,8 @@ export function ContactSection() {
           <Card>
             <CardHeader>
               <h3 className="text-xl font-semibold text-foreground">Follow Me</h3>
-              <p className="text-muted-foreground text-sm">
-                Connect with me on social media and professional platforms.
-              </p>
             </CardHeader>
-            <CardContent>
+              <CardContent className="space-y-4">
               <div className="flex flex-col gap-3">
                 {socialLinks.map((social) => (
                   <Button
