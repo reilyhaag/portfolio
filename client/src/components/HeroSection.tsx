@@ -24,7 +24,7 @@ export function HeroSection() {
             'text-6xl md:text-7xl font-medium text-foreground mb-8 leading-tight'
           )}
         >
-          Alex Johnson
+          Reily Haag
         </h1>
         
         <p 
@@ -35,7 +35,7 @@ export function HeroSection() {
             'text-xl text-muted-foreground mb-12 leading-relaxed'
           )}
         >
-          Creative professional focused on meaningful experiences.
+          Ops
         </p>
 
         <div 
