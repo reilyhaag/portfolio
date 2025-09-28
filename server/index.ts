@@ -74,14 +74,8 @@ async function initializeApp() {
       throw err;
     });
 
-    // Only use Vite in local development, never in production
-    if (process.env.NODE_ENV === "development" && !process.env.VERCEL) {
-      // Dynamic import to avoid bundling Vite in production
-      const { setupVite } = await import("./vite");
-      await setupVite(app, server);
-    } else {
-      serveStatic(app);
-    }
+    // Always use static serving - no Vite in production
+    serveStatic(app);
 
     isInitialized = true;
   } catch (error) {
