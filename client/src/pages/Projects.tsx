@@ -144,12 +144,8 @@ export default function Projects() {
 
         <div className="mb-20">
           <h1 className="text-5xl font-medium text-foreground mb-8">
-            All Projects
+            Projects
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl">
-            A comprehensive collection of my creative work, spanning brand identity, 
-            user experience design, creative facilitation, and storytelling projects.
-          </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
