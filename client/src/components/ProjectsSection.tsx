@@ -14,7 +14,7 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, index }: ProjectCardProps) {
   const cardAnimation = useInViewAnimation<HTMLDivElement>({ 
-    delay: index * 100 
+    delay: 0 
   });
 
   return (

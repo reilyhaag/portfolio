@@ -226,8 +226,8 @@ html {
   /* Standard scroll reveal animation - no layout shifts */
   .reveal {
     opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     will-change: opacity, transform;
   }
 

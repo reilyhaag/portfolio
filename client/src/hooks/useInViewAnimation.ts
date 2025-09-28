@@ -9,8 +9,8 @@ export interface UseInViewAnimationOptions {
 
 export function useInViewAnimation<T extends HTMLElement = HTMLElement>(options: UseInViewAnimationOptions = {}) {
   const {
-    threshold = 0.2,
-    rootMargin = '0px 0px -10% 0px',
+    threshold = 0.1,
+    rootMargin = '0px 0px -5% 0px',
     triggerOnce = true,
     delay = 0,
   } = options;
