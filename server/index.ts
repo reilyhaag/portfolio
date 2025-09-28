@@ -1,10 +1,30 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { serveStatic, log } from "./vite";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Simple logging function
+function log(message: string) {
+  console.log(`[express] ${message}`);
+}
+
+// Serve static files in production
+function serveStatic(app: express.Express) {
+  const distPath = path.resolve(__dirname, "../dist/public");
+  app.use(express.static(distPath));
+  
+  // Catch-all handler for SPA
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -36,7 +56,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Initialize the app synchronously for Vercel
+// Initialize the app
 let server: any;
 let isInitialized = false;
 
@@ -54,10 +74,8 @@ async function initializeApp() {
       throw err;
     });
 
-    // importantly only setup vite in development and after
-    // setting up all the other routes so the catch-all route
-    // doesn't interfere with the other routes
-    if (app.get("env") === "development") {
+    // Only use Vite in local development, never in production
+    if (process.env.NODE_ENV === "development" && !process.env.VERCEL) {
       // Dynamic import to avoid bundling Vite in production
       const { setupVite } = await import("./vite");
       await setupVite(app, server);
@@ -72,9 +90,8 @@ async function initializeApp() {
   }
 }
 
-// For Vercel, we need to initialize the app before handling requests
+// For Vercel, initialize immediately
 if (process.env.VERCEL) {
-  // Initialize immediately for Vercel
   initializeApp().catch(console.error);
 } else {
   // Local development - start the server
