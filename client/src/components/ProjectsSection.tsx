@@ -112,7 +112,7 @@ export function ProjectsSection() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-20">
             <h2 className="text-4xl font-medium text-foreground mb-6">
-              Selected Work
+              Projects
             </h2>
           </div>
           <div className="text-center py-20">
@@ -128,7 +128,7 @@ export function ProjectsSection() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-20">
           <h2 className="text-4xl font-medium text-foreground mb-6">
-            Selected Work
+            Projects
           </h2>
         </div>
 
