@@ -1,5 +1,4 @@
 // server/index.ts
-import "dotenv/config";
 import express2 from "express";
 
 // server/routes.ts
