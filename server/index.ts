@@ -1,7 +1,7 @@
-// import "dotenv/config"; // Not needed in Vercel
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import { serveStatic, log } from "./vite";
 
 const app = express();
 app.use(express.json());
@@ -37,31 +37,50 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  const server = await registerRoutes(app);
+// Initialize the app synchronously for Vercel
+let server: any;
+let isInitialized = false;
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+async function initializeApp() {
+  if (isInitialized) return;
+  
+  try {
+    server = await registerRoutes(app);
 
-    res.status(status).json({ message });
-    throw err;
-  });
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+      const status = err.status || err.statusCode || 500;
+      const message = err.message || "Internal Server Error";
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+      res.status(status).json({ message });
+      throw err;
+    });
+
+    // importantly only setup vite in development and after
+    // setting up all the other routes so the catch-all route
+    // doesn't interfere with the other routes
+    if (app.get("env") === "development") {
+      // Dynamic import to avoid bundling Vite in production
+      const { setupVite } = await import("./vite");
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+
+    isInitialized = true;
+  } catch (error) {
+    console.error("Failed to initialize app:", error);
+    throw error;
   }
+}
 
-  // For Vercel, we export the app instead of starting a server
-  if (process.env.VERCEL) {
-    // Vercel handles the server
-  } else {
-    // Local development - start the server
+// For Vercel, we need to initialize the app before handling requests
+if (process.env.VERCEL) {
+  // Initialize immediately for Vercel
+  initializeApp().catch(console.error);
+} else {
+  // Local development - start the server
+  (async () => {
+    await initializeApp();
     const port = parseInt(process.env.PORT || '5000', 10);
     server.listen({
       port,
@@ -69,8 +88,8 @@ app.use((req, res, next) => {
     }, () => {
       log(`serving on port ${port}`);
     });
-  }
-})();
+  })();
+}
 
 // Export the app for Vercel
 export default app;
