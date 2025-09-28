@@ -3,23 +3,13 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "maxDuration": 30
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/"
-    },
-    {
       "src": "/(.*)",
       "dest": "/"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
