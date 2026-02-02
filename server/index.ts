@@ -1,105 +1,53 @@
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createServer } from "http";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+const isDev = process.env.NODE_ENV === "development";
 
-// Simple logging function
 function log(message: string) {
-  console.log(`[express] ${message}`);
+  const time = new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+  console.log(`${time} [express] ${message}`);
 }
 
 // Serve static files in production
-function serveStatic(app: express.Express) {
+function serveStatic() {
   const distPath = path.resolve(__dirname, "../dist/public");
   app.use(express.static(distPath));
-  
-  // Catch-all handler for SPA
-  app.get("*", (req, res) => {
+  app.get("*", (_req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+async function startServer() {
+  const server = createServer(app);
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
-  });
-
-  next();
-});
-
-// Initialize the app
-let server: any;
-let isInitialized = false;
-
-async function initializeApp() {
-  if (isInitialized) return;
-  
-  try {
-    server = await registerRoutes(app);
-
-    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-      const status = err.status || err.statusCode || 500;
-      const message = err.message || "Internal Server Error";
-
-      res.status(status).json({ message });
-      throw err;
-    });
-
-    // Always use static serving - no Vite in production
-    serveStatic(app);
-
-    isInitialized = true;
-  } catch (error) {
-    console.error("Failed to initialize app:", error);
-    throw error;
+  if (isDev) {
+    // In development, use Vite
+    const { setupVite } = await import("./vite");
+    await setupVite(app, server);
+    log("Vite dev server configured");
+  } else {
+    // In production, serve static files
+    serveStatic();
   }
+
+  const port = parseInt(process.env.PORT || "3000", 10);
+  server.listen(port, "0.0.0.0", () => {
+    log(`serving on port ${port}`);
+  });
 }
 
-// For Vercel, initialize immediately
-if (process.env.VERCEL) {
-  initializeApp().catch(console.error);
-} else {
-  // Local development - start the server
-  (async () => {
-    await initializeApp();
-    const port = parseInt(process.env.PORT || '5000', 10);
-    server.listen({
-      port,
-      host: "0.0.0.0",
-    }, () => {
-      log(`serving on port ${port}`);
-    });
-  })();
-}
+startServer().catch(console.error);
 
-// Export the app for Vercel
+// Export for Vercel serverless
 export default app;
