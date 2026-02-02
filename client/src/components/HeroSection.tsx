@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { useInViewAnimation } from "@/hooks/useInViewAnimation";
 
 export function HeroSection() {

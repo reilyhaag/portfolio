@@ -1,14 +1,41 @@
+import "dotenv/config";
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import path from "path";
 import { fileURLToPath } from "url";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+const isDev = process.env.NODE_ENV === "development";
+
+// Security middleware
+app.use(helmet({
+  contentSecurityPolicy: isDev ? false : undefined, // Disable CSP in dev for Vite HMR
+}));
+
+app.use(cors({
+  origin: isDev ? true : process.env.ALLOWED_ORIGINS?.split(',') || true,
+  credentials: true,
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: { message: "Too many requests, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use("/api", limiter);
+
+// Body parsing with size limits
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 
 // Simple logging function
 function log(message: string) {
@@ -68,14 +95,20 @@ async function initializeApp() {
 
     app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
       const status = err.status || err.statusCode || 500;
-      const message = err.message || "Internal Server Error";
+      const message = isDev ? err.message : "Internal Server Error";
 
+      console.error("[express] Error:", err);
       res.status(status).json({ message });
-      throw err;
     });
 
-    // Always use static serving - no Vite in production
-    serveStatic(app);
+    // Use Vite in development, static serving in production
+    if (isDev) {
+      const { setupVite } = await import("./vite");
+      await setupVite(app, server);
+      log("Vite dev server configured");
+    } else {
+      serveStatic(app);
+    }
 
     isInitialized = true;
   } catch (error) {

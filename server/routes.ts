@@ -4,13 +4,18 @@ import { storage } from "./storage";
 import { insertProjectSchema } from "@shared/schema";
 import { z } from "zod";
 
+// Validation schemas
+const projectIdSchema = z.string().min(1).max(100);
+
 export async function registerRoutes(app: Express): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
-
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
-
+  // Health check endpoint
+  app.get("/api/health", (_req, res) => {
+    res.json({ 
+      status: "ok", 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime()
+    });
+  });
 
   // Projects API endpoints
   app.get("/api/projects", async (req, res) => {
@@ -41,7 +46,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/projects/:id", async (req, res) => {
     try {
-      const project = await storage.getProject(req.params.id);
+      // Validate project ID
+      const idResult = projectIdSchema.safeParse(req.params.id);
+      if (!idResult.success) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid project ID format"
+        });
+      }
+
+      const project = await storage.getProject(idResult.data);
       if (!project) {
         return res.status(404).json({
           success: false,

@@ -1,21 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+
+const isProduction = process.env.NODE_ENV === "production";
+const isReplit = process.env.REPL_ID !== undefined;
 
 export default defineConfig({
   plugins: [
     react(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
+    // Only load Replit plugins in development on Replit
+    ...(!isProduction && isReplit
       ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
-          await import("@replit/vite-plugin-dev-banner").then((m) =>
-            m.devBanner(),
-          ),
+          import("@replit/vite-plugin-runtime-error-modal").then((m) => m.default()),
+          import("@replit/vite-plugin-cartographer").then((m) => m.cartographer()),
+          import("@replit/vite-plugin-dev-banner").then((m) => m.devBanner()),
         ]
       : []),
   ],
@@ -30,6 +28,21 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    sourcemap: false,
+    // Chunk splitting for better caching
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor chunks
+          "react-vendor": ["react", "react-dom"],
+          "ui-vendor": ["framer-motion", "lucide-react", "@radix-ui/react-slot"],
+          "query-vendor": ["@tanstack/react-query"],
+        },
+      },
+    },
+    // Minification settings
+    minify: "esbuild",
+    target: "es2020",
   },
   server: {
     fs: {

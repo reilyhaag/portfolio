@@ -2,44 +2,44 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 
+// Static data moved outside component to prevent recreation on re-renders
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "reily@reilyhaag.com",
+    href: "mailto:reily@reilyhaag.com",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Los Angeles, CA",
+    href: null, // Not a link
+  },
+] as const;
+
+const socialLinks = [
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/reily-haag/",
+    username: "Reily Haag",
+  },
+  {
+    icon: Twitter,
+    label: "X",
+    href: "https://x.com/HaagReily",
+    username: "@haagreily",
+  },
+  {
+    icon: Github,
+    label: "GitHub",
+    href: "https://github.com/reilyhaag",
+    username: "@reilyhaag",
+  },
+] as const;
+
 export function ContactSection() {
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "reily@reilyhaag.com",
-      href: "mailto:reily@reilyhaag.com",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Los Angeles, CA",
-      href: "#",
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/reily-haag/",
-      username: "Reily Haag",
-    },
-    {
-      icon: Twitter,
-      label: "X",
-      href: "https://x.com/HaagReily",
-      username: "@haagreily",
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com/reilyhaag",
-      username: "@reilyhaag",
-    },
-  ];
-
   return (
     <section id="contact" className="py-32 px-6">
       <div className="max-w-4xl mx-auto">
@@ -59,7 +59,7 @@ export function ContactSection() {
             <CardContent className="space-y-4">
               {contactInfo.map((item) => (
                 <div key={item.label}>
-                  {item.href && item.href !== "#" ? (
+                  {item.href ? (
                     <a 
                       href={item.href}
                       className="flex items-center gap-3 p-2 rounded-md hover-elevate transition-all-smooth min-h-[44px]"

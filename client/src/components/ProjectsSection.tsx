@@ -1,18 +1,18 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, RefreshCw } from "lucide-react";
 import { useInViewAnimation } from "@/hooks/useInViewAnimation";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { Project } from "@shared/schema";
+import { memo } from "react";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+const ProjectCard = memo(function ProjectCard({ project }: ProjectCardProps) {
   const cardAnimation = useInViewAnimation<HTMLDivElement>({ 
     delay: 0 
   });
@@ -81,24 +81,24 @@ function ProjectCard({ project, index }: ProjectCardProps) {
       </CardContent>
     </Card>
   );
-}
+});
 
 export function ProjectsSection() {
   
-  const { data: projects = [], isLoading, error } = useQuery<Project[]>({
+  const { data: projects = [], isLoading, error, refetch } = useQuery<Project[]>({
     queryKey: ["/api/projects/featured"],
   });
 
   if (isLoading) {
     return (
-      <section id="work" className="py-32 px-6">
+      <section id="work" className="py-32 px-6" aria-busy="true">
         <div className="max-w-4xl mx-auto">
           <div className="mb-20">
             <h2 className="text-4xl font-medium text-foreground mb-6">
-              Selected Work
+              Projects
             </h2>
           </div>
-          <div className="text-center py-20">
+          <div className="text-center py-20" role="status" aria-live="polite">
             <div className="animate-pulse text-muted-foreground">Loading projects...</div>
           </div>
         </div>
@@ -115,8 +115,16 @@ export function ProjectsSection() {
               Projects
             </h2>
           </div>
-          <div className="text-center py-20">
-            <div className="text-red-500 mb-4">Error loading projects</div>
+          <div className="text-center py-20" role="alert" aria-live="assertive">
+            <div className="text-destructive mb-4">Unable to load projects.</div>
+            <Button 
+              variant="outline" 
+              onClick={() => refetch()}
+              className="mt-2"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Try Again
+            </Button>
           </div>
         </div>
       </section>
@@ -133,11 +141,10 @@ export function ProjectsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <ProjectCard 
               key={project.id} 
               project={project}
-              index={index}
             />
           ))}
         </div>

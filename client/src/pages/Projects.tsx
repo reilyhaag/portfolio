@@ -2,19 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, ArrowLeft } from "lucide-react";
+import { ExternalLink, ArrowLeft, RefreshCw } from "lucide-react";
 import { useInViewAnimation } from "@/hooks/useInViewAnimation";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import type { Project } from "@shared/schema";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+const ProjectCard = memo(function ProjectCard({ project }: ProjectCardProps) {
   const cardAnimation = useInViewAnimation<HTMLDivElement>({ 
     delay: 0 
   });
@@ -83,7 +82,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
       </CardContent>
     </Card>
   );
-}
+});
 
 export default function Projects() {
   const backButtonAnimation = useInViewAnimation<HTMLDivElement>({ delay: 100 });
@@ -97,15 +96,18 @@ export default function Projects() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
 
-  const { data: projects = [], isLoading, error } = useQuery<Project[]>({
+  const { data: projects = [], isLoading, error, refetch } = useQuery<Project[]>({
     queryKey: ["/api/projects"],
   });
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-pulse text-muted-foreground">Loading projects...</div>
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="flex items-center justify-center min-h-[calc(100vh-100px)] pt-20">
+          <div className="text-center" role="status" aria-live="polite">
+            <div className="animate-pulse text-muted-foreground">Loading projects...</div>
+          </div>
         </div>
       </div>
     );
@@ -113,12 +115,24 @@ export default function Projects() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 mb-4">Error loading projects</div>
-          <Button asChild>
-            <Link href="/">Return Home</Link>
-          </Button>
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="flex items-center justify-center min-h-[calc(100vh-100px)] pt-20">
+          <div className="text-center" role="alert" aria-live="assertive">
+            <div className="text-destructive mb-4">Unable to load projects.</div>
+            <div className="flex gap-3 justify-center">
+              <Button 
+                variant="outline" 
+                onClick={() => refetch()}
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Try Again
+              </Button>
+              <Button asChild>
+                <Link href="/">Return Home</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -149,11 +163,10 @@ export default function Projects() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <ProjectCard 
               key={project.id} 
               project={project}
-              index={index}
             />
           ))}
         </div>
