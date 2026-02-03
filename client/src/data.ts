@@ -5,7 +5,7 @@ export const projects = [
   {
     id: "sfr3",
     title: "SFR3 Fund",
-    description: "Ops/Product Director at a tech-enabled real estate fund with ~$2B in affordable housing. Managed operations and internal tooling for Customer Support, FP&A, and Utilities. Built systems processing 10,000s of utility bills monthly, fraud detection for 1000s of transactions, and cut support resolution time from ~5 days to <2. Owned a $12M/yr P&L line.",
+    description: "Ops/Product Director at a tech-enabled real estate fund owning/operating ~$2B in affordable housing. Managed operations and internal tooling for Customer Support, FP&A, and Utilities. Built systems processing 10,000s of utility bills monthly, fraud detection for 1000s of transactions, and cut support resolution time from ~5 days to <2. Owned a $12M/yr P&L line.",
     url: "https://www.sfr3.com/",
   },
   {
