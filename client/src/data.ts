@@ -3,6 +3,12 @@
 
 export const projects = [
   {
+    id: "sfr3",
+    title: "SFR3 Fund",
+    description: "Tech-enabled real estate fund owning/operating ~$2B in affordable housing. Led strategy, tooling, and teams across Support, FP&A, and Utilities across a portfolio of ~10,000 properties.",
+    url: "https://www.sfr3.com/",
+  },
+  {
     id: "lekko",
     title: "LEKKO",
     description: "Devtools startup building dynamic configuration tooling. Acquired by Rippling. First business hire. Launched the company's flagship product. Helped secure the company's first paying customers.",
@@ -11,7 +17,7 @@ export const projects = [
   {
     id: "spring-art",
     title: "spring.art",
-    description: "Tried to fix the broken fine art market. Taught myself to code. Learned how to pivot when things aren't working.",
+    description: "Tried to use software and data to fix the broken fine art market. Taught myself to code. Learned how to pivot when things aren't working.",
     url: null,
   },
 ];
@@ -26,6 +32,6 @@ export const socialLinks = [
 export const siteConfig = {
   name: "Reily Haag",
   location: "Los Angeles, CA",
-  bio: "Building and supporting tech-enabled businesses. Currently Ops at SFR3 Fund. Previously founding team at Lekko (acquired by Rippling) and founder at spring.art.",
+  bio: "Building tech-enabled businesses. Currently Ops/Product Director at SFR3 Fund. Previously founding team at Lekko (acquired by Rippling) and founded spring.art.",
   tagline: "Former art historian. I like people who make things. If you're working on something interesting, I'd love to hear about it.",
 };
