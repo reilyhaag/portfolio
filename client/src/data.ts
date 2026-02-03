@@ -32,6 +32,6 @@ export const socialLinks = [
 export const siteConfig = {
   name: "Reily Haag",
   location: "Los Angeles, CA",
-  bio: "Building and investing in tech-enabled businesses. Currently Ops/Product Director at SFR3 Fund. Previously founding team at Lekko (acquired by Rippling) and founded spring.art.",
+  bio: "Building tech-enabled businesses. Currently Ops/Product Director at SFR3 Fund. Previously founding team at Lekko (acquired by Rippling) and founded spring.art.",
   tagline: "Former art historian. I like people who make things. If you're working on something interesting, I'd love to hear about it.",
 };
